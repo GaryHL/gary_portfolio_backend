@@ -23,6 +23,7 @@ class ProjectTest extends TestCase
         $response->assertJson(['data' => []]);
 
         $response->assertJsonStructure([
+            'success',
             'data' => [
                 '*' => [
                     'id',
@@ -36,5 +37,5 @@ class ProjectTest extends TestCase
         ]);
     }
 
-    
+
 }
