@@ -48,5 +48,33 @@ class ProjectTest extends TestCase
         ]);
     }
 
+    public function test_store_project_return_project()
+    {
+        
+        $data = [
+            'example title' => "example title",
+            'description' => "example description",
+            'img_url' => "example",
+            'deploy' => "example deploy",
+            'repository' => "example repository",
+        ];
 
+        $response = $this->post('api/projects',$data);
+
+        $response->assertStatus(200);
+
+        $response->assertJson(['data' => []]);
+
+        $response->assertJsonStructure([
+            'success',
+                'data' => [
+                    'id',
+                    'title',
+                    'description',
+                    'img_url',
+                    'deploy',
+                    'repository',
+                ]
+        ]);
+    }
 }
