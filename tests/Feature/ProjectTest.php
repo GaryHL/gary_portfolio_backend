@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,8 +15,18 @@ class ProjectTest extends TestCase
      * @return void
      */
 
+
     public function test_index_return_projects()
     {
+
+        $project = new Project();
+        $project->title = "example title";
+        $project->description = "example description";
+        $project->img_url = "example img_url";
+        $project->deploy = "example deploy";
+        $project->repository = "example repository";
+
+
         $response = $this->get('api/projects');
 
         $response->assertStatus(200);
