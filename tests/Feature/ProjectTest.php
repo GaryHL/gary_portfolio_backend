@@ -52,7 +52,7 @@ class ProjectTest extends TestCase
     {
         
         $data = [
-            'example title' => "example title",
+            'title' => "example title",
             'description' => "example description",
             'img_url' => "example",
             'deploy' => "example deploy",
