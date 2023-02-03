@@ -13,18 +13,12 @@ class ProjectTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     public function test_index_return_projects()
     {
         $response = $this->get('api/projects');
 
         $response->assertStatus(200);
-        
+
     }
 }
