@@ -20,5 +20,21 @@ class ProjectTest extends TestCase
 
         $response->assertStatus(200);
 
+        $response->assertJson(['data' => []]);
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'title',
+                    'description',
+                    'img_url',
+                    'deploy',
+                    'repository',
+                ]
+            ]
+        ]);
     }
+
+    
 }

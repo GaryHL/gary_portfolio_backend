@@ -14,7 +14,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Project::all();
+        $projects = Project::all();
+        return response()->json(['data' => $projects]);
     }
 
     /**
