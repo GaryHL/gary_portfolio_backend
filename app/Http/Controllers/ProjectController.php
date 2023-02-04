@@ -26,7 +26,40 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $project = new Project();
+
+        $project->title  = $request->title;
+
+        $project->description  = $request->description;
         
+        $project->deploy  = $request->deploy;
+
+        $project->repository  = $request->repository;
+
+
+        // check the file field
+
+        if ($request->hasFile('img_url')) {
+
+            $file = $request->file('img_url');
+
+            $destinationPath = 'images/featureds/';
+
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            
+            $uploadSucces = $request->file('img_url')->move($destinationPath, $fileName);
+
+            $project->img_url  = $destinationPath . $fileName;
+
+        } else {
+
+            $project->img_url  = 'no picture';
+            
+        }
+
+        $project->save();
+
+        return response()->json(['success' => true,'data' => $project]);
     }
 
     /**
