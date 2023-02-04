@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Project;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,6 +16,7 @@ class ProjectTest extends TestCase
      * @return void
      */
 
+    use DatabaseMigrations;
 
     public function test_index_return_projects()
     {
@@ -22,7 +24,7 @@ class ProjectTest extends TestCase
         $project = new Project();
         $project->title = "example title";
         $project->description = "example description";
-        $project->img_url = "example img_url";
+        // $project->img_url = "example img_url";
         $project->deploy = "example deploy";
         $project->repository = "example repository";
 
@@ -50,7 +52,7 @@ class ProjectTest extends TestCase
 
     public function test_store_project_return_project()
     {
-        
+
         $data = [
             'title' => "example title",
             'description' => "example description",
@@ -59,7 +61,7 @@ class ProjectTest extends TestCase
             'repository' => "example repository",
         ];
 
-        $response = $this->post('api/projects',$data);
+        $response = $this->post('api/projects', $data);
 
         $response->assertStatus(200);
 
@@ -67,14 +69,14 @@ class ProjectTest extends TestCase
 
         $response->assertJsonStructure([
             'success',
-                'data' => [
-                    'id',
-                    'title',
-                    'description',
-                    'img_url',
-                    'deploy',
-                    'repository',
-                ]
+            'data' => [
+                'id',
+                'title',
+                'description',
+                'img_url',
+                'deploy',
+                'repository',
+            ]
         ]);
     }
 }
