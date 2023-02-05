@@ -15,7 +15,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return response()->json(['success' => true,'data' => $projects]);
+        return response()->json(['success' => true, 'data' => $projects]);
     }
 
     /**
@@ -31,7 +31,7 @@ class ProjectController extends Controller
         $project->title  = $request->title;
 
         $project->description  = $request->description;
-        
+
         $project->deploy  = $request->deploy;
 
         $project->repository  = $request->repository;
@@ -46,20 +46,18 @@ class ProjectController extends Controller
             $destinationPath = 'images/featureds/';
 
             $fileName = time() . '-' . $file->getClientOriginalName();
-            
+
             $uploadSucces = $request->file('img_url')->move($destinationPath, $fileName);
 
             $project->img_url  = $destinationPath . $fileName;
-
         } else {
 
             $project->img_url  = 'no picture';
-            
         }
 
         $project->save();
 
-        return response()->json(['success' => true,'data' => $project]);
+        return response()->json(['success' => true, 'data' => $project]);
     }
 
     /**
@@ -70,7 +68,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return response()->json(['success' => true, 'data' => $project]);
     }
 
     /**
@@ -82,8 +80,32 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'deploy' => 'required',
+            'repository' => 'required'
+        ]);
+
+        $project->title = $request->title;
+        $project->description = $request->description;
+        $project->deploy = $request->deploy;
+        $project->repository = $request->repository;
+
+        // Check if the request includes an image file
+        if ($request->hasFile('img_url')) {
+            $file = $request->file('img_url');
+            $destinationPath = 'images/featureds/';
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            $uploadSuccess = $request->file('img_url')->move($destinationPath, $fileName);
+            $project->img_url = $destinationPath . $fileName;
+        }
+
+        $project->save();
+
+        return response()->json(['success' => true, 'data' => $project]);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -91,8 +113,17 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $project = Project::find($id);
+        if(is_null($project)){
+            
+            return response()->json('No se pudo realizar la peticion, el archivo ya no existe o nunca existio', 404);
+        }
+
+        $project->delete();
+
+
+        return response()->json(['success' => true, 'eliminado con exito']);
     }
 }
