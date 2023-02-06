@@ -45,6 +45,7 @@ class ProjectTest extends TestCase
                     'img_url',
                     'deploy',
                     'repository',
+                    'type' => "example type",
                 ]
             ]
         ]);
@@ -59,6 +60,7 @@ class ProjectTest extends TestCase
             'img_url' => "example",
             'deploy' => "example deploy",
             'repository' => "example repository",
+            'type' => "example type",
         ];
 
         $response = $this->post('api/projects', $data);
@@ -76,7 +78,10 @@ class ProjectTest extends TestCase
                 'img_url',
                 'deploy',
                 'repository',
+                'type',
             ]
         ]);
     }
+
+    
 }
