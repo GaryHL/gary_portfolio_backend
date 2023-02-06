@@ -33,6 +33,7 @@ class ProjectController extends Controller
         $project->description  = $request->description;
 
         $project->deploy  = $request->deploy;
+        $project->type  = $request->type;
 
         $project->repository  = $request->repository;
 
@@ -90,6 +91,7 @@ class ProjectController extends Controller
         $project->title = $request->title;
         $project->description = $request->description;
         $project->deploy = $request->deploy;
+        $project->type = $request->type;
         $project->repository = $request->repository;
 
         // Check if the request includes an image file
